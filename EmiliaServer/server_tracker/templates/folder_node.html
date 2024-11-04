@@ -1,0 +1,14 @@
+{% for key, subtree in node.items %}
+    {% if subtree.length %}
+        <div class="file">
+            {{ key }} - {{ subtree.length }} bytes
+        </div>
+    {% else %}
+        <div class="folder">
+            {{ key }}
+            <div>
+                {% include "folder_node.html" with node=subtree %}
+            </div>
+        </div>
+    {% endif %}
+{% endfor %}

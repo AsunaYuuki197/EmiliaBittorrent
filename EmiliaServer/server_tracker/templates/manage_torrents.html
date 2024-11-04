@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section>
+    
+</section>
+<section>
+    <div class="container text-center ">
+        <h2 class="mb-4">Manage Torrents</h2>
+        <table class="table align-middle mb-0 bg-white post-box table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Upload Date</th>
+                    <th>Info Hash</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for torrent_info in torrents %}
+                <tr>
+                    <td>{{ torrent_info.torrent.name }}</td>
+                    {% if user.is_staff %}
+                    <td>{{ torrent_info.user.username }}</td>
+                    {% endif%}
+                    <td>{{ torrent_info.torrent.upload_date }}</td>
+                    <td>{{ torrent_info.torrent.info_hash }}</td>
+                    <td>
+                        <a href="{% url 'delete_torrent' torrent_info.torrent.pk %}" class="btn btn-danger btn-sm"
+                           onclick="return confirm('Delete this torrent? (⊙_⊙)？');">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

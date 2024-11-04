@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block content %}
+<section>
+    <div class="container">
+        <table class="table align-middle mb-0 bg-white table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Link</th>
+                    <th>Size</th>
+                    <th>Upload Date</th>
+                    <th>Seeders</th>
+                    <th>Leechers</th>
+                    <th>Completed</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for torrent_stat in torrent_stats %}
+                <tr>
+                    <td><a class="link-underline link-underline-opacity-0 " href="{% url 'torrent_detail' torrent_stat.torrent.info_hash %}">{{ torrent_stat.torrent.name }}</a></td>
+                    <td><a class="link-underline link-underline-opacity-0" href="{{ torrent_stat.torrent.torrent_url }}" download><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"></path>
+                        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"></path>
+                      </svg></a></td>
+                    <td>{{ torrent_stat.torrent.length }}</td>
+                    <td>{{ torrent_stat.torrent.upload_date }}</td>
+                    <td>{{ torrent_stat.seeder }}</td>
+                    <td>{{ torrent_stat.leecher }}</td>
+                    <td>{{ torrent_stat.completed }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </div>
+
+    <footer>
+
+        <nav aria-label="Torrent pagination">
+            <ul class="pagination justify-content-center">
+                {% if torrents.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ torrent_stats.previous_page_number }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+                {% endif %}
+    
+                {% for i in torrent_stats.paginator.page_range %}
+                    <li class="page-item {% if torrent_stats.number == i %}active{% endif %}">
+                        <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                    </li>
+                {% endfor %}
+    
+                {% if torrent_stats.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ torrent_stats.next_page_number }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+                {% endif %}
+            </ul>
+
+    </footer>
+    </nav>
+
+</section>
+{% endblock %}
+

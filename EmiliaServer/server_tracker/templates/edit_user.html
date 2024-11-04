@@ -1,0 +1,36 @@
+<!-- edit_user.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<section>
+    <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card shadow" style="border-radius: 1rem;">
+                    <div class="card-body p-5">
+                        <h2 class="mb-4 text-center">Edit user</h2>
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="form-group mb-4">
+                                    <label>Username</label>
+                                    <input type="text" name="username" value="{{ user.username }}" class="form-control">
+                                
+                                    <label>Email</label>
+                                    <input type="email" name="email" value="{{ user.email }}" class="form-control">
+
+                                    <label>Password</label>
+                                    <input type="password" name="password" value="{{ user.password }}" class="form-control">
+
+                                    
+                                    <label>Staff</label><br>
+                                    <input type="checkbox" name="is_staff" {% if user.is_staff %}checked{% endif %} class="form-check-input">
+                            </div>
+                            <button type="submit" class="form-control btn btn-success">Save changes</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
